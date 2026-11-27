@@ -1,5 +1,6 @@
-# config.php is never served as text (PHP executes it and prints nothing), but block direct hits anyway
-<Files "config.php">
-  Require all denied
-</Files>
-php_flag display_errors off
+RewriteEngine On
+
+# Exclude localhost from HTTPS redirection
+RewriteCond %{HTTP_HOST} !^localhost$ [NC]
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
